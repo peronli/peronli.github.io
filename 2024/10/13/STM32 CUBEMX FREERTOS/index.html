@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"peronli.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"peronli.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="仅供个人复习参考">
+  <meta name="description" content="使用 HAL 库编译 STM32 代码，并利用 FREERTOS 实现多任务的调度的学习随笔">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STM32 CUBEMX FREERTOS学习随笔">
 <meta property="og:url" content="http://peronli.github.io/2024/10/13/STM32%20CUBEMX%20FREERTOS/index.html">
 <meta property="og:site_name" content="Person Cloud">
-<meta property="og:description" content="仅供个人复习参考">
+<meta property="og:description" content="使用 HAL 库编译 STM32 代码，并利用 FREERTOS 实现多任务的调度的学习随笔">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-10-31T04:38:04.830Z">
+<meta property="article:modified_time" content="2024-10-31T13:13:53.514Z">
 <meta property="article:author" content="Person">
 <meta property="article:tag" content="STM32 HAL FreeRtos">
 <meta name="twitter:card" content="summary">
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-mine">
 
-    <a href="/mine/" rel="section"><i class="fa fa-home fa-fw"></i>我的</a>
+    <a href="/mine/" rel="section"><i class="fa fa-odnoklassniki fa-fw"></i>我的</a>
 
   </li>
   </ul>
@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-10-31 12:38:04" itemprop="dateModified" datetime="2024-10-31T12:38:04+08:00">2024-10-31</time>
+                <time title="修改时间：2024-10-31 21:13:53" itemprop="dateModified" datetime="2024-10-31T21:13:53+08:00">2024-10-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,8 +214,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="stm32-cubemx-freertos学习随笔">STM32 CUBEMX FREERTOS学习随笔</h1>
-<h2 id="新建工程">新建工程</h2>
+        <h2 id="新建工程">新建工程</h2>
 <p>选择型号，新建工程，此处不赘述</p>
 <hr />
 <h2 id="system-core">System Core</h2>
@@ -415,7 +414,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#stm32-cubemx-freertos%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94"><span class="nav-number">1.</span> <span class="nav-text">STM32 CUBEMX FREERTOS学习随笔</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">新建工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-core"><span class="nav-number">1.2.</span> <span class="nav-text">System Core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#middleware-and-software"><span class="nav-number">1.3.</span> <span class="nav-text">Middleware and Software</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#library_lowest_interrupt_priority-%E7%B3%BB%E7%BB%9F%E5%8F%AF%E7%AE%A1%E7%90%86%E7%9A%84%E6%9C%80%E9%AB%98%E4%B8%AD%E6%96%AD%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.4.</span> <span class="nav-text">&gt;LIBRARY_LOWEST_INTERRUPT_PRIORITY： 系统可管理的最高中断优先级。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks-and-queues"><span class="nav-number">1.5.</span> <span class="nav-text">Tasks and Queues</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="nav-number">1.6.</span> <span class="nav-text">代码生成</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">新建工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-core"><span class="nav-number">2.</span> <span class="nav-text">System Core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#middleware-and-software"><span class="nav-number">3.</span> <span class="nav-text">Middleware and Software</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#library_lowest_interrupt_priority-%E7%B3%BB%E7%BB%9F%E5%8F%AF%E7%AE%A1%E7%90%86%E7%9A%84%E6%9C%80%E9%AB%98%E4%B8%AD%E6%96%AD%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">4.</span> <span class="nav-text">&gt;LIBRARY_LOWEST_INTERRUPT_PRIORITY： 系统可管理的最高中断优先级。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks-and-queues"><span class="nav-number">5.</span> <span class="nav-text">Tasks and Queues</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">代码生成</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -442,7 +441,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -478,8 +477,6 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Person</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
-  </div>
 
         
 
@@ -527,6 +524,8 @@
 
 
 
+
+  
 
   
 
