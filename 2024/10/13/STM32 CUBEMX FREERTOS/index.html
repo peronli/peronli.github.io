@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"peronli.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="仅供个人复习参考">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 CUBEMX FREERTOS学习随笔">
+<meta property="og:url" content="http://peronli.github.io/2024/10/13/STM32%20CUBEMX%20FREERTOS/index.html">
+<meta property="og:site_name" content="Person Cloud">
+<meta property="og:description" content="仅供个人复习参考">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-10-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-31T04:38:04.830Z">
+<meta property="article:author" content="Person">
+<meta property="article:tag" content="STM32 HAL FreeRtos">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://peronli.github.io/2024/10/13/STM32%20CUBEMX%20FREERTOS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>STM32 CUBEMX FREERTOS学习随笔 | Person Cloud</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Person Cloud</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-mine">
+
+    <a href="/mine/" rel="section"><i class="fa fa-home fa-fw"></i>mine</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://peronli.github.io/2024/10/13/STM32%20CUBEMX%20FREERTOS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/mydear.jpg">
+      <meta itemprop="name" content="Person">
+      <meta itemprop="description" content="明日事明日毕">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Person Cloud">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          STM32 CUBEMX FREERTOS学习随笔
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-10-13 00:00:00" itemprop="dateCreated datePublished" datetime="2024-10-13T00:00:00+08:00">2024-10-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-31 12:38:04" itemprop="dateModified" datetime="2024-10-31T12:38:04+08:00">2024-10-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STM32/" itemprop="url" rel="index"><span itemprop="name">STM32</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="stm32-cubemx-freertos学习随笔">STM32 CUBEMX FREERTOS学习随笔</h1>
+<h2 id="新建工程">新建工程</h2>
+<p>选择型号，新建工程，此处不赘述</p>
+<hr />
+<h2 id="system-core">System Core</h2>
+<ol type="1">
+<li><strong>RCC</strong>：<code>HSE</code>（高速时钟）选择<code>Crystal Resonator</code>外部晶振，此时在 Clock Configuration 改<code>HCLK</code>为最大72MHZ。</li>
+<li><strong>SYS</strong>：Debug 使用<code>SW</code>；系统时基为避免与 FREERTOS 冲突，选择除了<code>SysTick</code>以外的定时器<code>TIMx</code>，如果裸机运行就默认用<code>Systick</code>。</li>
+</ol>
+<hr />
+<h2 id="middleware-and-software">Middleware and Software</h2>
+<p><strong>FREERTOS</strong>： 1. Mode：选择<code>CMSIS_V1</code>即可，CMSIS是一种为了确保兼容性和稳定性制作的软件接口标准 2. <strong>Kernel settings</strong>： &gt; USE_PREEMPTION： Enabled：RTOS使用抢占式调度器；Disabled：RTOS使用协作式调度器（时间片）。</p>
+<blockquote>
+<p>TICK_RATE_HZ：RTOS系统节拍中断的频率，值设置为1000，即周期就是1ms。</p>
+</blockquote>
+<blockquote>
+<p>MAX_PRIORITIES： 可使用的最大优先级数量。设置好以后任务就可以使用从0到（MAX_PRIORITIES - 1）的优先级，其中0位最低优先级，（MAX_PRIORITIES - 1）为最高优先级。</p>
+</blockquote>
+<blockquote>
+<p>MINIMAL_STACK_SIZE： 设置空闲任务的最小任务堆栈大小，以字为单位，而不是字节。如该值设置为128 Words， 那么真正的堆栈大小就是 128*4 = 512 Byte。</p>
+</blockquote>
+<blockquote>
+<p>MAX_TASK_NAME_LEN： 设置任务名最大长度。</p>
+</blockquote>
+<blockquote>
+<p>IDLE_SHOULD_YIELD： Enabled 空闲任务放弃CPU使用权给其他同优先级的用户任务。</p>
+</blockquote>
+<blockquote>
+<p>USE_MUTEXES： 为1时使用互斥信号量，相关的API函数会被编译。</p>
+</blockquote>
+<blockquote>
+<p>USE_RECURSIVE_MUTEXES： 为1时使用递归互斥信号量，相关的API函数会被编译。</p>
+</blockquote>
+<blockquote>
+<p>USE_COUNTING_SEMAPHORES： 为1时启用计数型信号量， 相关的API函数会被编译。</p>
+</blockquote>
+<blockquote>
+<p>QUEUE_REGISTRY_SIZE： 设置可以注册的队列和信号量的最大数量，在使用内核调试器查看信号量和队列的时候需要设置此宏，而且要先将消息队列和信号量进行注册，只有注册了的队列和信号量才会在内核调试器中看到，如果不使用内核调试器的话次宏设置为0即可。</p>
+</blockquote>
+<blockquote>
+<p>USE_APPLICATION_TASK_TAG： 为1时可以使用 vTaskSetApplicationTaskTag函数。</p>
+</blockquote>
+<blockquote>
+<p>USE_TICKLESS_IDLE： 置1：使能低功耗tickless模式；置0：保持系统节拍（tick）中断一直运行。假设开启低功耗的话可能会导致下载出现问题，因为程序在睡眠中，可用ISP下 载办法解决。</p>
+</blockquote>
+<blockquote>
+<p>USE_TASK_NOTIFICATIONS： 为1时使用任务通知功能，相关的API函数会被编译。开启了此功能，每个任务会多消耗8 个字节。</p>
+</blockquote>
+<blockquote>
+<p>RECORD_STACK_HIGH_ADDRESS： 为1时栈开始地址会被保存到每个任务的TCB中（假如栈是向下生长的）。</p>
+</blockquote>
+<ol start="3" type="1">
+<li>Memory management settings：</li>
+</ol>
+<blockquote>
+<p>Memory Allocation： Dynamic/Static 支持动态/静态内存申请</p>
+</blockquote>
+<blockquote>
+<p>TOTAL_HEAP_SIZE： 设置堆大小，如果使用了动态内存管理，FreeRTOS在创建 task, queue, mutex, software timer or semaphore的时候就会使用heap_x.c(x为1~5)中的内存申请函数来申请内存。这些内存就是从堆ucHeap[configTOTAL_HEAP_SIZE]中申请的。</p>
+</blockquote>
+<blockquote>
+<p>Memory Management scheme： 内存管理策略 heap_4。</p>
+</blockquote>
+<ol start="4" type="1">
+<li>Hook function related definitions：</li>
+</ol>
+<blockquote>
+<p>USE_IDLE_HOOK： 置1：使用空闲钩子（Idle Hook类似于回调函数）；置0：忽略空闲钩子。</p>
+</blockquote>
+<blockquote>
+<p>USE_TICK_HOOK： 置1：使用时间片钩子（Tick Hook）；置0：忽略时间片钩子。</p>
+</blockquote>
+<blockquote>
+<p>USE_MALLOC_FAILED_HOOK： 使用内存申请失败钩子函数。</p>
+</blockquote>
+<blockquote>
+<p>CHECK_FOR_STACK_OVERFLOW： 大于0时启用堆栈溢出检测功能，如果使用此功能用户必须提供一个栈溢出钩子函数，如果使用的话此值可以为1或者2，因为有两种栈溢出检测方法。</p>
+</blockquote>
+<ol start="5" type="1">
+<li>Run time and task stats gathering related definitions：</li>
+</ol>
+<blockquote>
+<p>GENERATE_RUN_TIME_STATS： 启用运行时间统计功能。</p>
+</blockquote>
+<blockquote>
+<p>USE_TRACE_FACILITY： 启用可视化跟踪调试。</p>
+</blockquote>
+<blockquote>
+<p>USE_STATS_FORMATTING_FUNCTIONS： 与宏configUSE_TRACE_FACILITY同时为1时会编译下面3个函数prvWriteNameToBuffer()、vTaskList()、 vTaskGetRunTimeStats()。</p>
+</blockquote>
+<ol start="6" type="1">
+<li>Co-routine related definitions：</li>
+</ol>
+<blockquote>
+<p>USE_CO_ROUTINES： 启用协程。</p>
+</blockquote>
+<blockquote>
+<p>MAX_CO_ROUTINE_PRIORITIES： 协程的有效优先级数目。</p>
+</blockquote>
+<ol start="7" type="1">
+<li>Software timer definitions：</li>
+</ol>
+<blockquote>
+<p>USE_TIMERS： 启用软件定时器。</p>
+</blockquote>
+<ol start="8" type="1">
+<li>Interrupt nesting behaviour configuration：</li>
+</ol>
+<blockquote>
+<p>LIBRARY_LOWEST_INTERRUPT_PRIORITY： 中断最低优先级。</p>
+</blockquote>
+<h2 id="library_lowest_interrupt_priority-系统可管理的最高中断优先级">&gt;LIBRARY_LOWEST_INTERRUPT_PRIORITY： 系统可管理的最高中断优先级。</h2>
+<h2 id="tasks-and-queues">Tasks and Queues</h2>
+<p>Queue参数： - Queue Name - Queue Size：队列深度，即队列能够存储的最大单元数目 - Item Size：队列长度，即数据单元的长度，以字节为单位 - Allocation：分配方式，<code>Dynamic</code>动态内存创建 - Buffer Name：缓冲区名称 - Buffer Size：缓冲区大小 - Control Block Name：控制块名称</p>
+<p>Task参数： - Task Name - Priority： 优先级，在 FreeRTOS 中，数值越大优先级越高，0 代表最低优先级 - Stack Size (Words)： 堆栈大小，单位为字，在32位处理器（STM32），一个字等于4字节，如果传入512那么任务大小为512*4字节 - Entry Function：入口函数 - Code Generation Option：代码生成选项 - Parameter： 任务入口函数形参，不用的时候配置为0或NULL即可 - Allocation - Buffer Name - Conrol Block Name</p>
+<hr />
+<h2 id="代码生成">代码生成</h2>
+<p>与HAL库一致，熟悉请跳过。</p>
+<p>进入<code>Project Manager</code>，在<code>Project</code>中选择项目名字、路径以及编译的 IDE ，比如 Keil 选择 <code>MDK-ARM</code></p>
+<p>在<code>Code Generator</code>中，勾选拷贝所有库到工程以及生成独立.c.h文件</p>
+<p>点击<code>Generate Code</code></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/STM32-HAL-FreeRtos/" rel="tag"># STM32 HAL FreeRtos</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/21/Hexo%20Next%E4%B8%BB%E9%A2%98%E9%83%A8%E7%BD%B2/" rel="next" title="Hexo Next主题部署">
+      Hexo Next主题部署 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#stm32-cubemx-freertos%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94"><span class="nav-number">1.</span> <span class="nav-text">STM32 CUBEMX FREERTOS学习随笔</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">新建工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#system-core"><span class="nav-number">1.2.</span> <span class="nav-text">System Core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#middleware-and-software"><span class="nav-number">1.3.</span> <span class="nav-text">Middleware and Software</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#library_lowest_interrupt_priority-%E7%B3%BB%E7%BB%9F%E5%8F%AF%E7%AE%A1%E7%90%86%E7%9A%84%E6%9C%80%E9%AB%98%E4%B8%AD%E6%96%AD%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.4.</span> <span class="nav-text">&gt;LIBRARY_LOWEST_INTERRUPT_PRIORITY： 系统可管理的最高中断优先级。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks-and-queues"><span class="nav-number">1.5.</span> <span class="nav-text">Tasks and Queues</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="nav-number">1.6.</span> <span class="nav-text">代码生成</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Person"
+      src="/img/mydear.jpg">
+  <p class="site-author-name" itemprop="name">Person</p>
+  <div class="site-description" itemprop="description">明日事明日毕</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Person</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
