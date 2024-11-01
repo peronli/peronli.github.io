@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Markdown速成指南</title>
+    <url>/Markdown-learning/2024/10/21/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>本文旨在快速入门 <code>Markdown</code>，并在文末配置了速查表供复习使用，更详细的内容可参见<a href="https://markdown.com.cn/">该文档</a>。</p>
+<h1 id="markdown-简介">Markdown 简介</h1>
+<p>Markdown 是一种<strong>轻量级标记语言</strong>，可与 HTML（超文本标记语言） 混编，是适合于制作技术文档、做笔记及为网站创建内容的简便方法。</p>
+<p>相较于纯 <code>txt</code> 文档，它多了标题、引用、链接甚至图片等功能；相较于 <code>word</code> 文档，它没有复杂的样式，简单的文本标记即可完成样式的排版。</p>
+<blockquote>
+<ol type="1">
+<li>专注于文字内容；</li>
+<li>纯文本，易读易写，可以方便地纳入版本控制；</li>
+<li>语法简单，没什么学习成本，能轻松在码字的同时做出美观大方的排版。</li>
+</ol>
+</blockquote>
+<h1 id="准备工作">准备工作</h1>
+<p><code>.md</code> 文档支持多种编辑器，笔者推荐使用 <a href="https://code.visualstudio.com/">vscode</a> 现代编辑器进行创作，加入 <code>Markdown Preview Enhanced</code> 插件后可实现预览、实时编辑及最重要的导出 HTML 与 PDF 等格式的功能。</p>
+<p>除此以外，也可用<a href="https://markdown.com.cn/editor/">在线 Markdown 编辑器</a>对照本文档练习。</p>
+<h1 id="markdown基本语法">Markdown基本语法</h1>
+<h3 id="标题语法">标题语法</h3>
+<p>不同数量的 <code>#</code> 可完成不同的标题，1~6级标题样式如下： <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section"># 一级标题</span></span><br><span class="line"><span class="section">## 二级标题</span></span><br><span class="line"><span class="section">### 三级标题</span></span><br><span class="line"><span class="section">#### 四级标题</span></span><br><span class="line"><span class="section">##### 五级标题</span></span><br><span class="line"><span class="section">###### 六级标题</span></span><br></pre></td></tr></table></figure></p>
+<hr />
+<h3 id="段落语法">段落语法</h3>
+<p>在 Markdown 中有两种方法实现换行：</p>
+<p>A. 插入空白行 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">插入空白行</span><br><span class="line"></span><br><span class="line">上面是空白行</span><br></pre></td></tr></table></figure> B. 空两格加回车 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">右边有两个空格  </span><br><span class="line">回车</span><br></pre></td></tr></table></figure></p>
+<p>渲染结果如下：</p>
+<blockquote>
+<p>插入空白行<br />
+上面是空白行</p>
+</blockquote>
+<blockquote>
+<p>右边有两个空格<br />
+回车</p>
+</blockquote>
+<hr />
+<h3 id="列表语法">列表语法</h3>
+<p>创建有序列表，请用数字序号加英文句点与空格的形式：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">1.</span> First</span><br><span class="line"><span class="bullet">2.</span> Second</span><br><span class="line"><span class="bullet">    1.</span> Indented </span><br><span class="line"><span class="bullet">    2.</span> Indented</span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：</p>
+<blockquote>
+<ol type="1">
+<li>First</li>
+<li>Second
+<ol type="1">
+<li>Indented</li>
+<li>Indented</li>
+</ol></li>
+</ol>
+</blockquote>
+<p>创建无序列表，请用<code>-</code>、<code>+</code>、<code>*</code>当中的一种书写：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">-</span> item<span class="emphasis">_1</span></span><br><span class="line"><span class="emphasis">    - item_</span>11</span><br><span class="line"><span class="bullet">    -</span> itme<span class="emphasis">_12</span></span><br><span class="line"><span class="emphasis">- item_</span>2</span><br><span class="line"></span><br><span class="line"><span class="bullet">+</span> item<span class="emphasis">_1</span></span><br><span class="line"><span class="emphasis">+ item_</span>2</span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> item<span class="emphasis">_1</span></span><br><span class="line"><span class="emphasis">* item_</span>2</span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：</p>
+<blockquote>
+<ul>
+<li>item_1
+<ul>
+<li>item_11</li>
+<li>itme_12</li>
+</ul></li>
+<li>item_2</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>item_1</li>
+<li>item_2</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>item_1</li>
+<li>item_2</li>
+</ul>
+</blockquote>
+<hr />
+<h3 id="分隔线语法">分隔线语法</h3>
+<p>创建分隔线，请在单独一行上用三个及以上星号 <code>***</code>、破折号 <code>---</code> 或下划线 <code>___</code>，三种方法渲染得到的结果是一样的。 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">***</span><br><span class="line"></span><br><span class="line">____</span><br></pre></td></tr></table></figure> 渲染结果如下：</p>
+<blockquote>
+<hr />
+</blockquote>
+<h3 id="强调语法">强调语法</h3>
+<p>在 Markdown 中根据 <code>*</code> 数量的不同衍生出斜体、粗体和粗斜体三种强调语法，以及由波浪号<code>~~删除线~~</code>包裹的删除线。</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">*这个是斜体*</span><br><span class="line">**这个粗体**</span><br><span class="line">***这个是粗斜体***</span><br><span class="line">~~被删掉了~~</span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：</p>
+<blockquote>
+<p><em>这个是斜体</em><br />
+<strong>这个粗体</strong><br />
+<strong><em>这个是粗斜体</em></strong><br />
+<del>被删掉了</del></p>
+</blockquote>
+<hr />
+<h3 id="引用语法">引用语法</h3>
+<h4 id="引用文字">1. 引用文字</h4>
+<p>创建文字引用，请在段落前加 <code>&gt;</code> 符号。 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">&gt; 单段引用</span><br><span class="line"></span><br><span class="line">&gt; 多个段落引用，需要加入一个空行</span><br><span class="line">&gt;</span><br><span class="line">&gt; 这是第二段</span><br><span class="line"></span><br><span class="line">&gt; 嵌套引用，根据&#x27;&gt;&#x27;号数量决定</span><br><span class="line">&gt;&gt; 嵌套引用</span><br><span class="line">&gt;&gt;&gt; 嵌套引用</span><br></pre></td></tr></table></figure></p>
+<p>渲染结果如下：</p>
+<blockquote>
+<p>单行引用</p>
+</blockquote>
+<blockquote>
+<p>多个段落引用，需要加入一个空行</p>
+<p>这是第二段</p>
+</blockquote>
+<blockquote>
+嵌套引用，根据'&gt;'号数量决定
+<blockquote>
+嵌套引用
+<blockquote>
+嵌套引用
+</blockquote>
+</blockquote>
+</blockquote>
+<hr />
+<h4 id="引用代码">2. 引用代码</h4>
+<p>标示单词或句子为代码时，请用反引号 () 包裹起来。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">This is a <span class="code">`code`</span></span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：<br />
+&gt;This is a <code>code</code></p>
+<p>标示一整段代码时，在每行代码前缩进至少一个制表符表示代码块，除此以外，也可以用三个反引号 () 或波浪号包裹起来 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section">#include <span class="language-xml"><span class="tag">&lt;<span class="name">stdio.h</span>&gt;</span></span></span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"><span class="code">    ...</span></span><br><span class="line"><span class="code">    return 0;</span></span><br><span class="line"><span class="code">&#125;</span></span><br></pre></td></tr></table></figure> 渲染结果如下：</p>
+<blockquote>
+<p>#include &lt;stdio.h&gt;<br />
+int main()<br />
+{<br />
+...<br />
+return 0;<br />
+}</p>
+</blockquote>
+<h4 id="引用链接">3. 引用链接</h4>
+<p>超链接 Markdown 语法代码为：<code>[链接名](链接地址)</code></p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">欢迎来到[<span class="string">我的首页</span>](<span class="link">https://peronli.github.io/</span>)</span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：</p>
+<blockquote>
+<p>欢迎来到<a href="https://peronli.github.io/">我的首页</a></p>
+</blockquote>
+<h4 id="引用图片">4. 引用图片</h4>
+<p>类似于超链接的语法，插入图片 Markdown 语法代码为：<code>![图片名](图片地址)</code></p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">![<span class="string">一张图片</span>](<span class="link">/img/earth-blackbg.jpg</span>)</span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：</p>
+<figure>
+<img src="/img/earth-blackbg.jpg" alt="一张图片" /><figcaption>一张图片</figcaption>
+</figure>
+<hr />
+<h3 id="表格语法">表格语法</h3>
+<h3 id="转义字符语法">转义字符语法</h3>
+<p>与大多数语言类似，Markdown 中在字符前接反斜杠 <code>\</code> 可显示标记语言字符原本的格式，不需要特别记忆，只要知道发现不能正常使用某字符时加上反斜杠即可。</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">\!\`\()\[]\&#123;&#125;\+\-\<span class="emphasis">*\#\.</span></span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：<br />
+!`()[]{}+-*#.</p>
+]]></content>
+      <categories>
+        <category>Markdown</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo NexT 主题一站式部署</title>
+    <url>/Hexo-NexT/2024/10/21/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>当我们成功使用 <code>Hexo</code> 搭建静态博客框架后，可以选择许多美观的主题运用，当然如果有能力和时间也可自己造一套主题使用。</p>
+<p>本文主要是关于流行主题<code>NexT</code>的部署，其大部分操作已在<a href="https://theme-next.iissnan.com/"><em>官网</em></a>上呈现，但由于时间久远且不够全面导致笔者走了一些弯路，故记录下该文章。</p>
+<p>如果使用主题， <code>Hexo</code> 应该有两份配置文件 <code>_config.yml</code> ，为叙述方便， <code>Hexo</code> 的配置文件称为<code>站点配置文件</code>； <code>/themes/next</code> 下的配置文件称为<code>主题配置文件</code>。</p>
+<hr />
+<h1 id="安装next">安装NexT</h1>
+<h2 id="主题下载">主题下载</h2>
+<p>推荐使用 <a href="https://git-scm.com/downloads"><em>Git</em></a> 来克隆最新版本，终端定位到 Hexo 站点目录后输入：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/next-theme/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<p>便克隆到了 <code>themes/next</code> 目录下，注意官网教程中的地址已经过时，务必使用上述代码中的最新版本地址。</p>
+<h2 id="主题启用">主题启用</h2>
+<p>在<code>站点配置文件</code>中，更改<code>theme</code>后面的字段以启用该主题。 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="主题验证">主题验证</h2>
+<p>使用一键三连： <figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">hexo</span> <span class="selector-tag">g</span> <span class="comment">//生成静态文件</span></span><br><span class="line"><span class="selector-tag">hexo</span> <span class="selector-tag">d</span> <span class="comment">//部署文件到远程仓库</span></span><br><span class="line"><span class="selector-tag">hexo</span> <span class="selector-tag">s</span> <span class="comment">//启动本地服务器</span></span><br></pre></td></tr></table></figure> 此时便可在浏览器访问<code>http://localhost:4000</code>以检查主题是否正确运行。</p>
+<hr />
+<h1 id="主题设定">主题设定</h1>
+<h2 id="语言设置">语言设置</h2>
+<p>编辑<code>站点配置文件</code>，找到<code>language</code>更改为简体中文： <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="作者名字与站点描述">作者名字与站点描述</h2>
+<p>编辑<code>站点配置文件</code>，找到<code>author</code>和<code>description</code>进行更改： <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">author:</span> <span class="string">作者名字</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">站点描述</span></span><br></pre></td></tr></table></figure> 站点配置文件中的其他参数详情可见<a href="https://hexo.io/zh-cn/docs/configuration"><em>相关文档</em></a>。</p>
+<h2 id="头像与社交链接">头像与社交链接</h2>
+<p>修改头像：编辑<code>主题配置文件</code>，修改头像字段<code>avatar</code>即可更改：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">avatar:</span></span><br><span class="line">  <span class="attr">url:</span> <span class="string">/img/my_avatar.jpg</span> <span class="comment"># 可以用完整的互联网URL，也可以是站点地址</span></span><br><span class="line">  <span class="attr">rounded:</span> <span class="literal">true</span> <span class="comment"># 设置 true，头像形状改为圆形</span></span><br><span class="line">  <span class="attr">rotated:</span> <span class="literal">false</span> <span class="comment"># 设置 true，鼠标在头像上悬停会旋转</span></span><br></pre></td></tr></table></figure>
+<p>修改社交链接：包括<strong>链接</strong>和<strong>图标</strong>两部分，编辑<code>主题配置文件</code>，修社交链接字段<code>social</code>即可更改： <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Social links</span></span><br><span class="line"><span class="attr">social:</span></span><br><span class="line">  <span class="attr">GitHub:</span> <span class="string">https://github.com/your-user-name</span></span><br><span class="line">  <span class="attr">Twitter:</span> <span class="string">https://twitter.com/your-user-name</span></span><br><span class="line">  <span class="string">知乎:</span> <span class="string">http://www.zhihu.com/people/your-user-name</span></span><br><span class="line">  <span class="comment"># 等等</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"><span class="comment"># Social Icons</span></span><br><span class="line"><span class="attr">social_icons:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span> <span class="comment"># 设置 true 可启用图标</span></span><br><span class="line">  <span class="attr">GitHub:</span> <span class="string">github</span></span><br><span class="line">  <span class="attr">Twitter:</span> <span class="string">twitter</span></span><br><span class="line">  <span class="string">微博:</span> <span class="string">weibo</span></span><br></pre></td></tr></table></figure></p>
+<p>NexT 使用的是 <a href="https://fontawesome.com/">Font Awesome</a> 提供的图标，也可以在 <a href="https://www.runoob.com/font-awesome/fontawesome-icons-webapp.html"><em>相关文档</em></a> 查看对应的<code>icon</code>代码，注意不必带 <code>fa-</code> 前缀</p>
+<h2 id="scheme设定">Scheme设定</h2>
+<p>Scheme 是 NexT 提供的不同外观选择方案，目前提供了四种外观：</p>
+<ul>
+<li>Muse —— NexT 最初的版本，黑白主调，大量留白</li>
+<li>Mist —— Muse 的紧凑版本，整洁有序的单栏外观</li>
+<li>Pisces —— 双栏 Scheme，小家碧玉似的清新</li>
+<li>Gemini —— 双栏 Scheme，分块更加明显</li>
+</ul>
+<p>默认使用 Muse，可在<code>主题配置文件</code>中找到<code>Schemes</code>进行修改： <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="comment">#scheme: Mist</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure> 启用哪个就选择哪个，不用的注释掉即可。</p>
+<blockquote>
+<p>注意：如果用 <code>hexo d</code> 部署后访问网站发现没有生效，大概率是因为浏览器缓存的问题，此时清除浏览器的浏览数据后刷新即可解决。</p>
+</blockquote>
+<hr />
+<h2 id="菜单设定">菜单设定</h2>
+<p>在 NexT 主题中，我们可以在<code>主题配置文件</code>中配置菜单栏，配置包括菜单项和菜单名两个部分：</p>
+<ul>
+<li>菜单项：格式为<code>item name: link || icon</code>，注意这里的<code>item name</code>并不是显示在屏幕中的菜单名；<code>link</code>指的是从<code>Hexo Site/source</code>开始的文件位置，<strong>除了首页和归档页都要自己手动创建页面</strong>；<code>icon</code>指的是图标代码，可以在 <a href="https://www.runoob.com/font-awesome/fontawesome-icons-webapp.html"><em>相关文档</em></a> 查看对应的<code>icon</code>代码。我们先在<code>主题配置文件</code>中修改成如下：</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#categories: /categories/ || fa fa-th</span></span><br><span class="line">  <span class="comment">#about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure>
+<p>此时我们的页面出现了标签页，但点进去会发现<code>Cannot GET /tags/</code>。这是因为 Hexo 在 <code>Hexo Site/public</code> 中找不到<code>tags</code>文件夹，因此我们需要在<code>Hexo Site/source</code>中创建并生成静态文件，然后 Hexo 会自动把上述文件保存在<code>Hexo Site/public</code>中。说做就做，我们先在 Git Bash 终端输入：</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> page <span class="keyword">tags</span></span><br></pre></td></tr></table></figure>
+<p>指令成功会提示：</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="built_in">INFO</span>  Validating<span class="built_in"> config</span></span><br><span class="line"><span class="built_in"></span><span class="built_in">INFO</span>  Created: D:\Blogs\source\tags\index.md</span><br></pre></td></tr></table></figure>
+<p>Amazing！居然在 source 下自动生成了 tags ，还附赠了一个 <code>index.md</code>，为了使用 NexT 主题自带的标签功能，我们将该<code>.md</code>文档修改如下：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">title</span>: tags</span><br><span class="line"><span class="attribute">type</span>: tags</span><br><span class="line"><span class="attribute">date</span>: <span class="number">2024</span>-<span class="number">10</span>-<span class="number">31</span> <span class="number">23</span>:<span class="number">47</span>:<span class="number">52</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Markdown 编写可参见我的<a href="https://peronli.github.io/Markdown-learning/2024/10/21/">Markdown速成指南</a></p>
+</blockquote>
+<p>在 Git Bash 终端输入三连：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">hexo <span class="selector-tag">g</span></span><br><span class="line">hexo d</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>此时菜单栏中的标签页就起作用了：</p>
+<p><img src="/../img/Hexo-NexT/Hexo-NexT_navbar_tags.png" /></p>
+<ul>
+<li>菜单名：进入<code>themes/next/languages/zh-CN.yml</code>，找到<code>menu</code>，不难看出<code>item name</code>后面接着的便是在导航栏中显示的文字：</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">首页</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">归档</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">分类</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">标签</span></span><br><span class="line">  <span class="attr">about:</span> <span class="string">关于</span></span><br><span class="line">  <span class="attr">search:</span> <span class="string">搜索</span></span><br></pre></td></tr></table></figure>
+<p>了解了这些，我们就可以创建一个新的菜单项了，首先在<code>主题配置文件</code>中输入自己想要的菜单项：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">mine:</span> <span class="string">/mine/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-at</span></span><br></pre></td></tr></table></figure>
+<p>然后在<code>themes/next/languages/zh-CN.yml</code>中填写菜单名：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">mine:</span> <span class="string">我的</span></span><br></pre></td></tr></table></figure>
+<p>然后用终端命令创建就大功告成了：</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> page mine</span><br></pre></td></tr></table></figure>
+<p><img src="/../img/Hexo-NexT/Hexo-NexT_navbar_news.png" /></p>
+<hr />
+<h2 id="网站图标">网站图标</h2>
+<p>保存一个自己喜欢的图标在<code>/themes/next/source/images</code>里，修改<code>主题配置文件</code>中的<code>favicon</code>即可：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">favicon:</span></span><br><span class="line">  <span class="attr">small:</span> <span class="string">/images/favicon.jpg</span></span><br><span class="line">  <span class="attr">medium:</span> <span class="string">/images/favicon.jpg</span></span><br><span class="line">  <span class="attr">apple_touch_icon:</span> <span class="string">/images/favicon.jpg</span></span><br><span class="line">  <span class="attr">safari_pinned_tab:</span> <span class="string">/images/favicon.jpg</span></span><br></pre></td></tr></table></figure>
+<h2 id="隐藏网页页脚-powered-by">隐藏网页页脚 Powered By</h2>
+<p>修改<code>主题配置文件</code>中的<code>powered</code>字段为<code>false</code>即可： <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">footer:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line">  <span class="comment"># Powered by Hexo &amp; NexT</span></span><br><span class="line">  <span class="attr">powered:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="文章设定">文章设定</h1>
+<h2 id="字体设置">字体设置</h2>
+<p>NexT 开放了五个特定范围的字体设定：</p>
+<ul>
+<li>全局字体（global）：定义的字体应用在全局<code>body</code>元素上</li>
+<li>文章标题字体（title）：文章的标题字体</li>
+<li>标题字体（headings）：文章内标题的字体（h1, h2, h3, h4, h5, h6）</li>
+<li>文章字体（posts）：文章所使用的字体</li>
+<li>代码字体（codes）：代码块所使用的字体</li>
+</ul>
+<p>各项所指定的字体将作为首选字体，当他们不可用时会自动 Fallback 到 NexT 设定的基础字体组。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">font:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">host:</span>    <span class="comment"># 外接字体库地址，默认为 https://fonts.googleapis.com </span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 全局字体</span></span><br><span class="line">  <span class="attr">global:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span>  <span class="comment"># 是否使用外链字体库</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Roboto</span>  <span class="comment"># 字体family</span></span><br><span class="line">    <span class="attr">size:</span>           <span class="comment"># 字体大小</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 文章标题字体</span></span><br><span class="line">  <span class="attr">title:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Monda</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 标题字体（h1~h6）</span></span><br><span class="line">  <span class="attr">headings:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Roboto</span></span><br><span class="line">    <span class="attr">size:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 文章字体</span></span><br><span class="line">  <span class="attr">posts:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 代码块字体</span></span><br><span class="line">  <span class="attr">codes:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> </span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="代码高亮">代码高亮</h2>
+<p>NexT 使用 <a href="https://github.com/chriskempson/tomorrow-theme">Tomorrow Theme</a> 作为代码高亮，内置多款主题。 NexT 默认使用的是 白色的 normal 主题，可选的值有：normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</p>
+<p>修改<code>主题设置文件</code>中的<code>codeblock</code>即可：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="comment"># Code Highlight theme</span></span><br><span class="line">  <span class="comment"># Available values: normal | night | night eighties | night blue | night bright | solarized | solarized dark | galactic</span></span><br><span class="line">  <span class="attr">highlight_theme:</span> <span class="string">night</span> <span class="string">bright</span></span><br></pre></td></tr></table></figure>
+<h2 id="代码复制">代码复制</h2>
+<p>修改<code>主题设置文件</code>中的<code>copy_button</code>即可：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">copy_button:</span></span><br><span class="line">  <span class="comment"># 设置 true，打开代码复制</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 设置 true，显示复制成功信息</span></span><br><span class="line">  <span class="attr">show_result:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># 可选: default | flat | mac</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">default</span></span><br></pre></td></tr></table></figure>
+<h2 id="打赏功能">打赏功能</h2>
+<p>修改<code>主题设置文件</code>中的<code>reward_settings</code>:</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">reward_settings:</span></span><br><span class="line">  <span class="comment"># 设置 true，启用打赏功能  </span></span><br><span class="line">  <span class="attr">enable:</span> <span class="string">ture</span></span><br><span class="line">  <span class="comment"># 设置 true，启用动画效果  </span></span><br><span class="line">  <span class="attr">animation:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># 显示文字，可注释掉</span></span><br><span class="line">  <span class="attr">comment:</span> <span class="string">谢谢~</span></span><br><span class="line"></span><br><span class="line"><span class="attr">reward:</span></span><br><span class="line">  <span class="attr">wechatpay:</span> <span class="string">/images/wechatpay.png</span></span><br><span class="line">  <span class="attr">alipay:</span> <span class="string">/images/alipay.png</span></span><br><span class="line">  <span class="attr">paypal:</span> <span class="string">/images/paypal.png</span></span><br><span class="line">  <span class="attr">bitcoin:</span> <span class="string">/images/bitcoin.png</span></span><br></pre></td></tr></table></figure>
+<h2 id="版权声明">版权声明</h2>
+<p>修改<code>主题设置文件</code>中的<code>creative_commons</code>:</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">creative_commons:</span></span><br><span class="line">  <span class="attr">license:</span> <span class="string">by-nc-sa</span> <span class="comment"># 可选 by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | zero</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span>    <span class="comment"># 侧边栏显示版权信息</span></span><br><span class="line">  <span class="attr">post:</span> <span class="literal">true</span>        <span class="comment"># 文章末尾显示版权信息</span></span><br></pre></td></tr></table></figure>
+<hr />
+<h1 id="优化篇">优化篇</h1>
+<h2 id="字数统计阅读时间">字数统计/阅读时间</h2>
+<p>安装插件： <figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">npm install hexo-symbols-<span class="built_in">count</span>-<span class="built_in">time</span></span><br></pre></td></tr></table></figure></p>
+<p>在<code>站点配置文件</code>新增如下内容： <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">exclude_codeblock:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">awl:</span> <span class="number">4</span></span><br><span class="line">  <span class="attr">wpm:</span> <span class="number">275</span></span><br><span class="line">  <span class="attr">suffix:</span> <span class="string">&quot;mins.&quot;</span></span><br></pre></td></tr></table></figure></p>
+<p>在<code>主题配置文件</code>新增如下内容：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>渲染结果如下：</p>
+<blockquote>
+<p><img src="/../img/Hexo-NexT/Hexo-NexT_Post_count_time.png" /></p>
+</blockquote>
+<hr />
+<h2 id="文章永久链接格式">文章永久链接格式</h2>
+<p>Hexo 默认的永久链接格式目录层级太复杂，不仅不利于 SEO，而且也不美观，这里提供一种不带插件的简单方法，首先前往<code>站点配置文件</code>：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">http://peronli.github.io</span> <span class="comment"># 自己的网站地址</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">urlname/:year/:month/:day/</span> <span class="comment"># 修改此处</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">false</span> <span class="comment"># true 显示「页面」永久链接结尾的&#x27;index.html&#x27;部分</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">false</span> <span class="comment"># true 显示「文章」永久链接结尾的&#x27;.html&#x27;部分</span></span><br></pre></td></tr></table></figure>
+<p><code>permalink</code>支持的所有属性详见<a href="https://hexo.io/zh-cn/docs/permalinks">官方文档</a>，这里我自定义了一个<code>urlname</code>来个性化每篇文章的永久链接，同学们也可以根据上述文档定义自己喜欢的链接格式。</p>
+<p>如果按照我的自定义，在写 Markdown 文件时在 <code>front-matter</code> 部分新增字段<code>urlname:</code>就大功告成了。但为了方便使用，我们可以在<code>Hexo Site/scaffolds/post.md</code>模板文件中修改如下：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> &#123;&#123; <span class="string">title</span> &#125;&#125;</span><br><span class="line"><span class="attr">urlname:</span> </span><br><span class="line"><span class="attr">date:</span> &#123;&#123; <span class="string">date</span> &#125;&#125;</span><br><span class="line"><span class="attr">tags:</span></span><br></pre></td></tr></table></figure>
+<p><code>hexo clean</code>、<code>hexo g</code>后新建一个文章试试，在终端输入：</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">new</span> <span class="string">&quot;test&quot;</span></span><br></pre></td></tr></table></figure>
+<p>进入文档，我们给它起个名字就可以了</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">urlname:</span> <span class="string">test</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2024-11-01 10:28:18</span></span><br><span class="line"><span class="attr">tags:</span></span><br></pre></td></tr></table></figure>
+<p>最后部署得到的永久链接格式为：</p>
+<blockquote>
+<p>https://peronli.github.io/test/2024/11/01/</p>
+</blockquote>
+<hr />
+]]></content>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>Next</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32 CUBEMX FREERTOS学习随笔</title>
+    <url>/undefined/2024/10/13/</url>
+    <content><![CDATA[<h2 id="新建工程">新建工程</h2>
+<p>选择型号，新建工程，此处不赘述</p>
+<hr />
+<h2 id="system-core">System Core</h2>
+<ol type="1">
+<li><strong>RCC</strong>：<code>HSE</code>（高速时钟）选择<code>Crystal Resonator</code>外部晶振，此时在 Clock Configuration 改<code>HCLK</code>为最大72MHZ。</li>
+<li><strong>SYS</strong>：Debug 使用<code>SW</code>；系统时基为避免与 FREERTOS 冲突，选择除了<code>SysTick</code>以外的定时器<code>TIMx</code>，如果裸机运行就默认用<code>Systick</code>。</li>
+</ol>
+<hr />
+<h2 id="middleware-and-software">Middleware and Software</h2>
+<p><strong>FREERTOS</strong>： 1. Mode：选择<code>CMSIS_V1</code>即可，CMSIS是一种为了确保兼容性和稳定性制作的软件接口标准 2. <strong>Kernel settings</strong>： &gt; USE_PREEMPTION： Enabled：RTOS使用抢占式调度器；Disabled：RTOS使用协作式调度器（时间片）。</p>
+<blockquote>
+<p>TICK_RATE_HZ：RTOS系统节拍中断的频率，值设置为1000，即周期就是1ms。</p>
+</blockquote>
+<blockquote>
+<p>MAX_PRIORITIES： 可使用的最大优先级数量。设置好以后任务就可以使用从0到（MAX_PRIORITIES - 1）的优先级，其中0位最低优先级，（MAX_PRIORITIES - 1）为最高优先级。</p>
+</blockquote>
+<blockquote>
+<p>MINIMAL_STACK_SIZE： 设置空闲任务的最小任务堆栈大小，以字为单位，而不是字节。如该值设置为128 Words， 那么真正的堆栈大小就是 128*4 = 512 Byte。</p>
+</blockquote>
+<blockquote>
+<p>MAX_TASK_NAME_LEN： 设置任务名最大长度。</p>
+</blockquote>
+<blockquote>
+<p>IDLE_SHOULD_YIELD： Enabled 空闲任务放弃CPU使用权给其他同优先级的用户任务。</p>
+</blockquote>
+<blockquote>
+<p>USE_MUTEXES： 为1时使用互斥信号量，相关的API函数会被编译。</p>
+</blockquote>
+<blockquote>
+<p>USE_RECURSIVE_MUTEXES： 为1时使用递归互斥信号量，相关的API函数会被编译。</p>
+</blockquote>
+<blockquote>
+<p>USE_COUNTING_SEMAPHORES： 为1时启用计数型信号量， 相关的API函数会被编译。</p>
+</blockquote>
+<blockquote>
+<p>QUEUE_REGISTRY_SIZE： 设置可以注册的队列和信号量的最大数量，在使用内核调试器查看信号量和队列的时候需要设置此宏，而且要先将消息队列和信号量进行注册，只有注册了的队列和信号量才会在内核调试器中看到，如果不使用内核调试器的话次宏设置为0即可。</p>
+</blockquote>
+<blockquote>
+<p>USE_APPLICATION_TASK_TAG： 为1时可以使用 vTaskSetApplicationTaskTag函数。</p>
+</blockquote>
+<blockquote>
+<p>USE_TICKLESS_IDLE： 置1：使能低功耗tickless模式；置0：保持系统节拍（tick）中断一直运行。假设开启低功耗的话可能会导致下载出现问题，因为程序在睡眠中，可用ISP下 载办法解决。</p>
+</blockquote>
+<blockquote>
+<p>USE_TASK_NOTIFICATIONS： 为1时使用任务通知功能，相关的API函数会被编译。开启了此功能，每个任务会多消耗8 个字节。</p>
+</blockquote>
+<blockquote>
+<p>RECORD_STACK_HIGH_ADDRESS： 为1时栈开始地址会被保存到每个任务的TCB中（假如栈是向下生长的）。</p>
+</blockquote>
+<ol start="3" type="1">
+<li>Memory management settings：</li>
+</ol>
+<blockquote>
+<p>Memory Allocation： Dynamic/Static 支持动态/静态内存申请</p>
+</blockquote>
+<blockquote>
+<p>TOTAL_HEAP_SIZE： 设置堆大小，如果使用了动态内存管理，FreeRTOS在创建 task, queue, mutex, software timer or semaphore的时候就会使用heap_x.c(x为1~5)中的内存申请函数来申请内存。这些内存就是从堆ucHeap[configTOTAL_HEAP_SIZE]中申请的。</p>
+</blockquote>
+<blockquote>
+<p>Memory Management scheme： 内存管理策略 heap_4。</p>
+</blockquote>
+<ol start="4" type="1">
+<li>Hook function related definitions：</li>
+</ol>
+<blockquote>
+<p>USE_IDLE_HOOK： 置1：使用空闲钩子（Idle Hook类似于回调函数）；置0：忽略空闲钩子。</p>
+</blockquote>
+<blockquote>
+<p>USE_TICK_HOOK： 置1：使用时间片钩子（Tick Hook）；置0：忽略时间片钩子。</p>
+</blockquote>
+<blockquote>
+<p>USE_MALLOC_FAILED_HOOK： 使用内存申请失败钩子函数。</p>
+</blockquote>
+<blockquote>
+<p>CHECK_FOR_STACK_OVERFLOW： 大于0时启用堆栈溢出检测功能，如果使用此功能用户必须提供一个栈溢出钩子函数，如果使用的话此值可以为1或者2，因为有两种栈溢出检测方法。</p>
+</blockquote>
+<ol start="5" type="1">
+<li>Run time and task stats gathering related definitions：</li>
+</ol>
+<blockquote>
+<p>GENERATE_RUN_TIME_STATS： 启用运行时间统计功能。</p>
+</blockquote>
+<blockquote>
+<p>USE_TRACE_FACILITY： 启用可视化跟踪调试。</p>
+</blockquote>
+<blockquote>
+<p>USE_STATS_FORMATTING_FUNCTIONS： 与宏configUSE_TRACE_FACILITY同时为1时会编译下面3个函数prvWriteNameToBuffer()、vTaskList()、 vTaskGetRunTimeStats()。</p>
+</blockquote>
+<ol start="6" type="1">
+<li>Co-routine related definitions：</li>
+</ol>
+<blockquote>
+<p>USE_CO_ROUTINES： 启用协程。</p>
+</blockquote>
+<blockquote>
+<p>MAX_CO_ROUTINE_PRIORITIES： 协程的有效优先级数目。</p>
+</blockquote>
+<ol start="7" type="1">
+<li>Software timer definitions：</li>
+</ol>
+<blockquote>
+<p>USE_TIMERS： 启用软件定时器。</p>
+</blockquote>
+<ol start="8" type="1">
+<li>Interrupt nesting behaviour configuration：</li>
+</ol>
+<blockquote>
+<p>LIBRARY_LOWEST_INTERRUPT_PRIORITY： 中断最低优先级。</p>
+</blockquote>
+<h2 id="library_lowest_interrupt_priority-系统可管理的最高中断优先级">&gt;LIBRARY_LOWEST_INTERRUPT_PRIORITY： 系统可管理的最高中断优先级。</h2>
+<h2 id="tasks-and-queues">Tasks and Queues</h2>
+<p>Queue参数： - Queue Name - Queue Size：队列深度，即队列能够存储的最大单元数目 - Item Size：队列长度，即数据单元的长度，以字节为单位 - Allocation：分配方式，<code>Dynamic</code>动态内存创建 - Buffer Name：缓冲区名称 - Buffer Size：缓冲区大小 - Control Block Name：控制块名称</p>
+<p>Task参数： - Task Name - Priority： 优先级，在 FreeRTOS 中，数值越大优先级越高，0 代表最低优先级 - Stack Size (Words)： 堆栈大小，单位为字，在32位处理器（STM32），一个字等于4字节，如果传入512那么任务大小为512*4字节 - Entry Function：入口函数 - Code Generation Option：代码生成选项 - Parameter： 任务入口函数形参，不用的时候配置为0或NULL即可 - Allocation - Buffer Name - Conrol Block Name</p>
+<hr />
+<h2 id="代码生成">代码生成</h2>
+<p>与HAL库一致，熟悉请跳过。</p>
+<p>进入<code>Project Manager</code>，在<code>Project</code>中选择项目名字、路径以及编译的 IDE ，比如 Keil 选择 <code>MDK-ARM</code></p>
+<p>在<code>Code Generator</code>中，勾选拷贝所有库到工程以及生成独立.c.h文件</p>
+<p>点击<code>Generate Code</code></p>
+]]></content>
+      <categories>
+        <category>STM32</category>
+      </categories>
+      <tags>
+        <tag>STM32 HAL FreeRtos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>test</title>
+    <url>/This%20is%20a%20test/2024/11/01/</url>
+    <content><![CDATA[
+]]></content>
+  </entry>
+</search>
