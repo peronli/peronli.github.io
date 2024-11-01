@@ -84,7 +84,7 @@
 <h3 id="浏览进度">浏览进度</h3>
 <p>搜索<code>主题配置文件</code>中的<code>powered</code>字段并改为<code>true</code>即可：</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h2 id="隐藏网页页脚-powered-by">隐藏网页页脚 Powered By</h2>
+<h3 id="隐藏网页页脚-powered-by">隐藏网页页脚 Powered By</h3>
 <p>搜索<code>主题配置文件</code>中的<code>powered</code>字段并改为<code>false</code>即可：</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">powered:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 <hr />
