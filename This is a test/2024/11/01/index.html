@@ -186,6 +186,27 @@
             </span>
 
           
+            <span id="/This%20is%20a%20test/2024/11/01/" class="post-meta-item leancloud_visitors" data-flag-title="test" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/This%20is%20a%20test/2024/11/01/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/This%20is%20a%20test/2024/11/01/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -243,8 +264,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Hexo-NexT/2024/10/21/" rel="prev" title="Hexo NexT 主题一站式部署">
-      <i class="fa fa-chevron-left"></i> Hexo NexT 主题一站式部署
+    <a href="/Markdown-learning/2024/10/21/" rel="prev" title="Markdown速成指南">
+      <i class="fa fa-chevron-left"></i> Markdown速成指南
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -259,6 +280,7 @@
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -432,6 +454,35 @@
   
 
   
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '7WX19qmbB4OG1pB4SKtDpKea-gzGzoHsz# Your leancloud application appid',
+      appKey     : 'iB5xc7osLNBjMOmKDzY1LCCS# Your leancloud application appkey',
+      placeholder: "欢迎留言~",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>
