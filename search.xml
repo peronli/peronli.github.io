@@ -524,7 +524,7 @@ return 0;<br />
 ]]></content>
   </entry>
   <entry>
-    <title>STM32 HAL库常用函数</title>
+    <title>STM32 HAL库函数</title>
     <url>/STM32_HAL_Code/2024/11/02/</url>
     <content><![CDATA[<h1 id="前言">前言</h1>
 <p>最近正在学习 STM32 HAL库，因此顺便记录下一些常用的函数供后续复习速查使用。</p>
@@ -596,6 +596,7 @@ return 0;<br />
 ]]></content>
       <tags>
         <tag>STM32</tag>
+        <tag>HAL</tag>
       </tags>
   </entry>
 </search>
