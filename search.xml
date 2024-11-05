@@ -448,4 +448,74 @@ return 0;<br />
         <tag>STM32 HAL FreeRtos</tag>
       </tags>
   </entry>
+  <entry>
+    <title>FreeRTOS HAL库开发学习随笔</title>
+    <url>/FreeRTOS%E2%80%94HAL/2024/11/03/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>学习需要，做点笔记以防老年痴呆忘记~</p>
+<h2 id="freertos-基础知识">FreeRTOS 基础知识</h2>
+<p>不加入 <code>OS</code> （操作系统）的单片机编程通常称为<code>裸机编程</code></p>
+<p><code>RTOS</code> (Real-time Operating System 实时操作系统) 是一种体积小巧、确定性强的计算机操作系统, 通常用于需要在严格时间限制内对外部事件做出反应的嵌入式系统。</p>
+<p>常用的 RTOS 有国外的<code>FreeRTOS、 μC/OS、RTX、Huawei LiteOS 和 AliOS-Things</code> 等。</p>
+<h3 id="多任务系统">多任务系统</h3>
+<p>在裸机系统中，程序的主体是 CPU 按照顺序执行的。而在多任务系统中， 任务的执行是由系统调度的。</p>
+<h3 id="实时调度">实时调度</h3>
+<p>实时操作系统 (RTOS) 利用与通用（非实时）系统相同的原理来实现多任务处理， 但两者的目标截然不同。这一差异主要体现在调度策略上。实时嵌入式系统 旨在对现实世界的事件作出及时响应。这些事件通常有截止时间， 实时嵌入式系统必须在此之前响应，RTOS 调度策略必须确保遵守这些截止时间要求。</p>
+<p>为在小型 RTOS（如 FreeRTOS）中实现这一目标，软件工程师必须为每个任务分配优先级。RTOS 的调度策略 就是确保能够执行的最高优先级任务获得处理时间。如果存在多个能够运行的同等最高优先级任务（既没有延迟也没有阻塞），则调度策略可以选择在这些任务之间“公平”地分配处理时间。</p>
+<h2 id="freertos-编程风格">FreeRTOS 编程风格</h2>
+<h3 id="freertos-数据类型">FreeRTOS 数据类型</h3>
+<p>在 FreeRTOS 中， 使用的数据类型虽然都是标准 C 里面的数据类型，但是针对不同的处理器，对标准 C 的数据类型又进行了重定义。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Type definitions. */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portCHAR		char</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portFLOAT		float</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portDOUBLE		double</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portLONG		long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portSHORT		short</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portSTACK_TYPE	uint32_t</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> portBASE_TYPE	long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> portSTACK_TYPE StackType_t;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> BaseType_t;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">long</span> UBaseType_t;</span><br></pre></td></tr></table></figure>
+<p>FreeRTOS 中详细的数据类型重定义在 <code>portmacro.h</code> 这个头文件中实现</p>
+<h3 id="freertos-变量名的定义">FreeRTOS 变量名的定义</h3>
+<p>在 FreeRTOS 中，定义变量的时候往往会把变量的类型当作前缀加在变量上， 这样的好处是让用户一看到这个变量就知道该变量的类型。</p>
+<p>比如 <code>char</code> 型变量的前缀是 <code>c</code>， <code>short</code> 型变量的前缀是 <code>s</code>， <code>long</code> 型变量的前缀是 <code>l</code>， <code>portBASE_TYPE</code> 类型变量的前缀是 <code>x</code>。</p>
+<p><code>无符号型变量</code>的前缀为 <code>u</code>， 、<code>指针变量</code>的前缀为 <code>p</code>。</p>
+<p>因此，当我们定义一个<code>无符号的 char 型变量</code>的时候会加一个 <code>uc</code> 前缀， 当定义一个 <code>char 型的指针变量</code>的时候会有一个 <code>pc</code> 前缀</p>
+<p>还有其他的数据类型，比如数据结构，任务句柄，队列句柄等定义的变量名的前缀也是 <code>x</code>。</p>
+<h3 id="freertos-函数名的定义">FreeRTOS 函数名的定义</h3>
+<p>函数名包含了函数返回值的类型、 函数所在的文件名和函数的功能，如果是私有的函数则会加一个 <code>prv</code> 的前缀。示例：</p>
+<ol type="1">
+<li><code>vTaskPrioritySet()</code>：返回值为 void 型， 在task.c 这个文件中定义。</li>
+<li><code>xQueueReceive()</code>：返回值为 portBASE_TYPE 型， 在 queue.c 这个文件中定义。</li>
+<li><code>vSemaphoreCreateBinary()</code>：返回值为 void 型， 在 semphr.h 这个文件中定义。</li>
+</ol>
+<h3 id="freertos-宏定义">FreeRTOS 宏定义</h3>
+<p>通用宏定义如下：</p>
+<ul>
+<li>pdTRUE 1</li>
+<li>pdFALSE 0</li>
+<li>pdPASS 1</li>
+<li>pdFAIL 0</li>
+</ul>
+<p>一般宏定义由大写字母表示，并配有小写字母的前缀， 前缀用于表示该宏在哪个头文件定义。</p>
+<h2 id="stm32cubemx-实战">STM32CubeMX 实战</h2>
+<h3 id="三板斧">三板斧</h3>
+<p>展开左侧 System Core： - SYS：Debug 选择 Serial Wire；时基选除了<code>Systick</code>以外的即可，以防与<code>FreeRTOS</code>重合 - RCC：HES 选择外部晶振</p>
+<p>打开时钟树，配置 HCLK（MHZ）为最大值（注：下方有提示最大值是多少），然后点两下空格即自动配置完成。</p>
+<h3 id="freertos-配置">FreeRTOS 配置</h3>
+<p>展开左侧 Middleware and Software Packs，点击 FreeRTOS：</p>
+<p>上方的 Mode ：Interface 选择 CMSIS_V1 或 CMSIS_V2</p>
+<p>下方的 Configuration：</p>
+<p>点击 Tasks and Queues：</p>
+<p>新增任务，这时会让我们编辑该任务的所有属性： - Task Name：任务名 - Priority：优先级：数字越大优先执行 - Stack Size：执行任务所需空间大小 - Entry Function：入口函数 - Code Generation Option：代码生成：一般用默认，<code>weak</code>为弱定义可被覆盖 - Parameter：入口函数形参，一般没有填 NULL - Allocation：动态或静态内存创建，动态即空间大小会自动分配，静态需自己指定。初学者选动态即可，选静态则可填以下两个选项： - Buffer Name：缓冲区名称 - Control Block Name：控制块名称</p>
+<p>新增队列,这时会让我们编辑该任务的所有属性： - Queue Name：队列名 - Queue Size：队列长度 - Item Size：队列每个数据大小 - Allocation：动态或静态内存创建，动态即空间大小会自动分配，静态需自己指定。初学者选动态即可，选静态则可填以下两个选项： - Buffer Name：缓冲区名称 - Control Block Name：控制块名称</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>STM32 HAL库常用函数</title>
+    <url>/STM32_HAL_Code/2024/11/02/</url>
+    <content><![CDATA[<h1 id="前言">前言</h1>
+<p>最近正在学习 STM32 HAL库，因此顺便记录下一些常用的函数供后续复习速查使用。</p>
+<h1 id="gpio">GPIO</h1>
+<p><code>GPIO</code>所有相关函数如下： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_Init</span><span class="params">(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_DeInit</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint32_t</span> GPIO_Pin)</span>;</span><br><span class="line">GPIO_PinState <span class="title function_">HAL_GPIO_ReadPin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_WritePin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_TogglePin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_GPIO_LockPin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_EXTI_IRQHandler</span><span class="params">(<span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_EXTI_Callback</span><span class="params">(<span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="gpio初始化hal_gpio_init">GPIO初始化：HAL_GPIO_Init</h2>
+<p>CubeMx 会帮我们完成该部分，我们也可以手动配置：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">HAL_GPIO_Init(GPIOC, &amp;GPIO_InitStruct);</span><br></pre></td></tr></table></figure>
+<p>第二个参数是个结构体： <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">uint32_t</span> Pin;       <span class="comment">/* 选择引脚 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Mode;      <span class="comment">/* 设置引脚模式 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Pull;      <span class="comment">/* 引脚是否上拉或下拉 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Speed;     <span class="comment">/* 设置引脚速度 */</span></span><br><span class="line">&#125; GPIO_InitTypeDef;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      <tags>
+        <tag>STM32</tag>
+      </tags>
+  </entry>
 </search>
