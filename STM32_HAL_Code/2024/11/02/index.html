@@ -28,7 +28,7 @@
 <meta property="og:description" content="前言 最近正在学习 STM32 HAL库，因此顺便记录下一些常用的函数供后续复习速查使用。 GPIO GPIO所有相关函数如下： 12345678void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init);void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-11-02T07:42:18.000Z">
-<meta property="article:modified_time" content="2024-11-02T08:05:58.234Z">
+<meta property="article:modified_time" content="2024-11-05T02:32:05.413Z">
 <meta property="article:author" content="Person">
 <meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary">
@@ -211,10 +211,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-11-02 15:42:18 / 修改时间：16:05:58" itemprop="dateCreated datePublished" datetime="2024-11-02T15:42:18+08:00">2024-11-02</time>
+              <time title="创建时间：2024-11-02 15:42:18" itemprop="dateCreated datePublished" datetime="2024-11-02T15:42:18+08:00">2024-11-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-11-05 10:32:05" itemprop="dateModified" datetime="2024-11-05T10:32:05+08:00">2024-11-05</time>
+              </span>
 
           
             <span id="/STM32_HAL_Code/2024/11/02/" class="post-meta-item leancloud_visitors" data-flag-title="STM32 HAL库常用函数" title="阅读次数">
@@ -243,14 +249,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>803</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -266,10 +272,69 @@
 <p>最近正在学习 STM32 HAL库，因此顺便记录下一些常用的函数供后续复习速查使用。</p>
 <h1 id="gpio">GPIO</h1>
 <p><code>GPIO</code>所有相关函数如下： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_Init</span><span class="params">(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_DeInit</span><span class="params">(GPIO_TypeDef *GPIOx, <span class="type">uint32_t</span> GPIO_Pin)</span>;</span><br><span class="line">GPIO_PinState <span class="title function_">HAL_GPIO_ReadPin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_WritePin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin, GPIO_PinState PinState)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_TogglePin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line">HAL_StatusTypeDef <span class="title function_">HAL_GPIO_LockPin</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_EXTI_IRQHandler</span><span class="params">(<span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">HAL_GPIO_EXTI_Callback</span><span class="params">(<span class="type">uint16_t</span> GPIO_Pin)</span>;</span><br></pre></td></tr></table></figure></p>
-<h2 id="gpio初始化hal_gpio_init">GPIO初始化：HAL_GPIO_Init</h2>
+<h2 id="gpio初始化">GPIO初始化：</h2>
+<p><code>HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)</code></p>
 <p>CubeMx 会帮我们完成该部分，我们也可以手动配置：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_Init(GPIOC, &amp;GPIO_InitStruct);</span><br></pre></td></tr></table></figure>
-<p>第二个参数是个结构体： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">uint32_t</span> Pin;       <span class="comment">/* 选择引脚 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Mode;      <span class="comment">/* 设置引脚模式 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Pull;      <span class="comment">/* 引脚是否上拉或下拉 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Speed;     <span class="comment">/* 设置引脚速度 */</span></span><br><span class="line">&#125; GPIO_InitTypeDef;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">uint32_t</span> Pin;       <span class="comment">/* 选择引脚 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Mode;      <span class="comment">/* 设置引脚模式 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Pull;      <span class="comment">/* 引脚是否上拉或下拉 */</span></span><br><span class="line">  <span class="type">uint32_t</span> Speed;     <span class="comment">/* 设置引脚速度 */</span></span><br><span class="line">&#125; GPIO_InitTypeDef;</span><br></pre></td></tr></table></figure>
+<h2 id="gpio复位">GPIO复位：</h2>
+<p><code>HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)</code></p>
+<p>作用：复位某个引脚，示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_Init(GPIOC, GPIO_PIN_4);</span><br></pre></td></tr></table></figure>
+<h2 id="读引脚">读引脚：</h2>
+<p><code>HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)</code></p>
+<p>作用：读引脚电平状态，返回1或0。参数前文已出现过，不赘述</p>
+<h2 id="写引脚">写引脚：</h2>
+<p><code>HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)</code></p>
+<p>作用：写引脚电平状态，可写0或1，示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="翻转引脚电平状态">翻转引脚电平状态：</h2>
+<p><code>HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)</code></p>
+<p>作用：翻转引脚电平状态，参数前文已出现过，不赘述</p>
+<h2 id="锁引脚">锁引脚：</h2>
+<p><code>HAL_GPIO_LockPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)</code></p>
+<p>作用：锁住引脚电平，参数前文已出现过，不赘述</p>
+<h2 id="中断服务函数">中断服务函数：</h2>
+<p><code>HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)</code></p>
+<p>作用：判断是几号线中断，清除中断标识位，然后调用中断回调函数 <code>HAL_GPIO_EXTI_Callback()</code></p>
+<h2 id="中断回调函数">中断回调函数：</h2>
+<p><code>HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)</code></p>
+<p>作用：中断服务函数，<code>CubeMX</code>中在<code>gpio.c</code>生成的该函数是 weak 版本的，这意味着我们可以在<code>main.c</code>中定义一个函数名相同的函数覆盖。</p>
+<hr />
+<h2 id="uart-usart">UART / USART</h2>
+<ul>
+<li><p><strong>UART（通用异步收发器）</strong>：<strong>仅支持异步通信</strong>。这意味着数据传输时，发送方和接收方并不共享时钟信号。它们通过设定一致的波特率来保持通信的同步性。虽然这种方式简化了通信线路，但波特率的偏差可能导致数据传输错误。</p></li>
+<li><p><strong>USART（通用同步/异步收发器）</strong>：<strong>支持异步通信和同步通信</strong>。与UART的异步模式相同，USART也可以不使用时钟信号传输数据。它还支持同步模式，此时，发送端和接收端通过共享同一时钟信号来实现数据同步。同步通信能够大幅提高传输速度，并减少波特率差异带来的错误。</p></li>
+</ul>
+<h3 id="uart结构体定义">UART结构体定义</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> __<span class="title">UART_HandleTypeDef</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  USART_TypeDef *Instance; <span class="comment">/* UART 寄存器地址 */</span></span><br><span class="line">  UART_InitTypeDef Init; <span class="comment">/* UART 通信参数*/</span></span><br><span class="line">  UART_AdvFeatureInitTypeDef AdvancedInit; <span class="comment">/* UART 高级功能初始化参数 */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint8_t</span> *pTxBuffPtr; <span class="comment">/*指向 UART Tx传输缓冲区的指针 */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> TxXferSize; <span class="comment">/* UART Tx传输大小 */</span></span><br><span class="line"></span><br><span class="line">  __IO <span class="type">uint16_t</span> TxXferCount; <span class="comment">/* UART Tx传输计数器 */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint8_t</span> *pRxBuffPtr; <span class="comment">/*指向 UART Rx 传输缓冲区的指针 */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> RxXferSize; <span class="comment">/* UART Rx传输大小 */</span></span><br><span class="line"></span><br><span class="line">  __IO <span class="type">uint16_t</span> RxXferCount;  <span class="comment">/* UART Rx传输计数器 */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> Mask; <span class="comment">/* UART Rx RDR register mask */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint32_t</span> FifoMode; <span class="comment">/* Specifies if the FIFO mode is being used. This parameter can be a value of @ref UARTEx_FIFO_mode. */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> NbRxDataToProcess;  <span class="comment">/* Number of data to process during RX ISR execution */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> NbTxDataToProcess; <span class="comment">/* Number of data to process during TX ISR execution */</span></span><br><span class="line"></span><br><span class="line">  __IO HAL_UART_RxTypeTypeDef ReceptionType; <span class="comment">/* Type of ongoing reception */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">void</span> (*RxISR)(<span class="keyword">struct</span> __UART_HandleTypeDef *huart); <span class="comment">/* Function pointer on Rx IRQ handler */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">void</span> (*TxISR)(<span class="keyword">struct</span> __UART_HandleTypeDef *huart); <span class="comment">/* Function pointer on Tx IRQ handler */</span></span><br><span class="line"></span><br><span class="line">  DMA_HandleTypeDef *hdmatx; <span class="comment">/* UART Tx DMA句柄参数      */</span></span><br><span class="line"></span><br><span class="line">  DMA_HandleTypeDef *hdmarx; <span class="comment">/* UART Rx DMA句柄参数      */</span></span><br><span class="line"></span><br><span class="line">  HAL_LockTypeDef Lock; <span class="comment">/* 锁定对象（项目） */</span></span><br><span class="line"></span><br><span class="line">  __IO HAL_UART_StateTypeDef gState; <span class="comment">/* 与全局句柄管理相关的UART状态信息，也与Tx操作相关。这个参数可以是@ref HAL_UART_StateTypeDef */</span></span><br><span class="line"></span><br><span class="line">  __IO HAL_UART_StateTypeDef RxState; <span class="comment">/* 与Rx操作相关的UART状态信息。这参数可以是@ref HAL_UART_StateTypeDef的值 */</span></span><br><span class="line"></span><br><span class="line">  __IO <span class="type">uint32_t</span> ErrorCode; <span class="comment">/* UART Error code */</span></span><br><span class="line">&#125; UART_HandleTypeDef;</span><br></pre></td></tr></table></figure>
+<h3 id="串口收发函数">串口收发函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HAL_UART_Transmit();     <span class="comment">//串口发送数据，使用超时管理机制 </span></span><br><span class="line">HAL_UART_Receive();      <span class="comment">//串口接收数据，使用超时管理机制</span></span><br><span class="line">HAL_UART_Transmit_IT();  <span class="comment">//串口中断模式发送  </span></span><br><span class="line">HAL_UART_Receive_IT();   <span class="comment">//串口中断模式接收</span></span><br><span class="line">HAL_UART_Transmit_DMA(); <span class="comment">//串口DMA模式发送</span></span><br><span class="line">HAL_UART_Transmit_DMA(); <span class="comment">//串口DMA模式接收</span></span><br></pre></td></tr></table></figure>
+<h4 id="串口发送数据">串口发送数据</h4>
+<p><code>HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)</code></p>
+<p>功能：串口发送指定长度的数据。如果超时没发送完成，则返回超时标志（HAL_TIMEOUT）。</p>
+<p>参数： - UART_HandleTypeDef <em>huart：串口别名<code>huart</code> - uint8_t </em>pData：发送的数据 - uint16_t Size：发送的字节数 - uint32_t Timeout：最大发送时间</p>
+<p>示例： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/* 串口发送三个字节数据，最大传输时间0xffff */</span></span><br><span class="line">HAL_UART_Transmit(&amp;huart1, (<span class="type">uint8_t</span> *)ZZX, <span class="number">3</span>, <span class="number">0xffff</span>);  </span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>串口接收数据用法一致，不再赘述</p>
+</blockquote>
+<h4 id="中断接收数据">中断接收数据</h4>
+<p><code>HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)</code></p>
+<p>功能：串口中断接收，以中断方式接收指定长度数据。</p>
+<p>参数： - UART_HandleTypeDef <em>huart：串口别名<code>huart</code> - uint8_t </em>pData：接收到的数据的存放地址 - Size：接收的字节数</p>
+<blockquote>
+<p>中断发送数据用法一致，不再赘述</p>
+</blockquote>
+<h3 id="串口中断函数">串口中断函数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);  <span class="comment">//串口发送中断回调函数</span></span><br><span class="line">HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);  <span class="comment">//串口接收中断回调函数</span></span><br><span class="line">HAL_UART_IRQHandler(UART_HandleTypeDef *huart);  <span class="comment">//串口中断处理函数</span></span><br><span class="line"></span><br><span class="line">HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef *huart);  <span class="comment">//串口发送一半中断回调函数（用的较少）</span></span><br><span class="line">HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);<span class="comment">//串口接收一半回调函数（用的较少）</span></span><br><span class="line"></span><br><span class="line">HAL_UART_ErrorCallback();<span class="comment">//串口接收错误函数</span></span><br></pre></td></tr></table></figure>
+<p>函数形参都是 UART 别名，只介绍主要用到的函数功能：</p>
+<ul>
+<li><strong>串口接收中断回调函数</strong>（HAL_UART_RxCpltCallback）：串口中断接收完成之后，会进入该函数，该函数为空函数，用户需自行修改</li>
+<li><strong>串口中断处理函数</strong>（HAL_UART_IRQHandler）：判断是发送中断还是接收中断，然后进行数据的发送和接收，在中断服务函数中使用。如果接收数据，则会进行接收中断处理函数；如果发送数据，则会进行发送中断处理函数</li>
+</ul>
+<h3 id="串口查询函数">串口查询函数</h3>
+<p><code>HAL_UART_GetState()</code></p>
+<p>判断UART的接收是否结束，或者发送数据是否忙碌</p>
 
     </div>
 
@@ -371,7 +436,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gpio"><span class="nav-number">2.</span> <span class="nav-text">GPIO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gpio%E5%88%9D%E5%A7%8B%E5%8C%96hal_gpio_init"><span class="nav-number">2.1.</span> <span class="nav-text">GPIO初始化：HAL_GPIO_Init</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gpio"><span class="nav-number">2.</span> <span class="nav-text">GPIO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gpio%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">GPIO初始化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpio%E5%A4%8D%E4%BD%8D"><span class="nav-number">2.2.</span> <span class="nav-text">GPIO复位：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%BC%95%E8%84%9A"><span class="nav-number">2.3.</span> <span class="nav-text">读引脚：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%BC%95%E8%84%9A"><span class="nav-number">2.4.</span> <span class="nav-text">写引脚：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BF%BB%E8%BD%AC%E5%BC%95%E8%84%9A%E7%94%B5%E5%B9%B3%E7%8A%B6%E6%80%81"><span class="nav-number">2.5.</span> <span class="nav-text">翻转引脚电平状态：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E5%BC%95%E8%84%9A"><span class="nav-number">2.6.</span> <span class="nav-text">锁引脚：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E6%9C%8D%E5%8A%A1%E5%87%BD%E6%95%B0"><span class="nav-number">2.7.</span> <span class="nav-text">中断服务函数：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">2.8.</span> <span class="nav-text">中断回调函数：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uart-usart"><span class="nav-number">2.9.</span> <span class="nav-text">UART &#x2F; USART</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#uart%E7%BB%93%E6%9E%84%E4%BD%93%E5%AE%9A%E4%B9%89"><span class="nav-number">2.9.1.</span> <span class="nav-text">UART结构体定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E6%94%B6%E5%8F%91%E5%87%BD%E6%95%B0"><span class="nav-number">2.9.2.</span> <span class="nav-text">串口收发函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE"><span class="nav-number">2.9.2.1.</span> <span class="nav-text">串口发送数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E6%8E%A5%E6%94%B6%E6%95%B0%E6%8D%AE"><span class="nav-number">2.9.2.2.</span> <span class="nav-text">中断接收数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E4%B8%AD%E6%96%AD%E5%87%BD%E6%95%B0"><span class="nav-number">2.9.3.</span> <span class="nav-text">串口中断函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0"><span class="nav-number">2.9.4.</span> <span class="nav-text">串口查询函数</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -438,13 +503,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">13k</span>
+    <span title="站点总字数">18k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">12 分钟</span>
+    <span title="站点阅读时长">16 分钟</span>
 </div>
 
         
